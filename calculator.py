@@ -16,6 +16,10 @@ class Card:
         return self.value
     def getSuit(self):
         return self.suit
+    def compareCards(self, cardB):
+        if self.getValue() == cardB.getValue() and self.getSuit() == cardB.getSuit():
+            return True
+        return False
     def printCard(self):
         print(f"{self.value} of {self.suit}")
 
@@ -59,22 +63,20 @@ class Play:
         remove_counter = 0
         while indexer < len(deck):
             c = deck[indexer]
-            c_val = c.getValue()
-            c_suit = c.getSuit()
 
-            if c_val == self.player1.getCardA().getValue() and c_suit == self.player1.getCardA().getSuit():
+            if c.compareCards(self.player1.getCardA()):
                 del deck[indexer]
                 indexer -= 1
                 remove_counter += 1
-            elif c_val == self.player1.getCardB().getValue() and c_suit == self.player1.getCardB().getSuit():
+            elif c.compareCards(self.player1.getCardB()):
                 del deck[indexer]
                 indexer -= 1
                 remove_counter +=1
-            elif c_val == self.player2.getCardA().getValue() and c_suit == self.player2.getCardA().getSuit():
+            elif c.compareCards(self.player2.getCardA()):
                 del deck[indexer]
                 indexer -= 1
                 remove_counter += 1
-            elif c_val == self.player2.getCardB().getValue() and c_suit == self.player2.getCardB().getSuit():
+            elif c.compareCards(self.player2.getCardB()):
                 del deck[indexer]
                 indexer -= 1
                 remove_counter += 1
