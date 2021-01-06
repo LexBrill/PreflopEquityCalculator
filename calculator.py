@@ -1,5 +1,6 @@
 import sys
 import random
+import itertools
 
 ## Input Syntax: Ace of Hearts and Two of Spades -> Ah2s
 ##               Jack of Diamonds and Ten of Diamonds -> JTd or JdTd
@@ -105,6 +106,24 @@ class Play:
         del self.deck[river_random]
 
         self.board = board
+
+    def allHands(self, playerHand):
+        possible_cards = self.board
+        possible_cards.append(playerHand.getCardA())
+        possible_cards.append(playerHand.getCardB())
+        possible_hands = itertools.combinations(possible_cards, 5)
+        possible_hands = list(possible_hands)
+        count = 0
+        while count < len(possible_hands):
+            possible_hands[count] = list(possible_hands[count])
+            count += 1
+        return possible_hands
+
+    def bestHands(self):
+        pass
+
+    def findWinner(self):
+        pass 
     
     def printDeck(self):
         for c in self.deck:
@@ -173,6 +192,19 @@ print("****** DECK AFTER BOARD")
 
 play.player2.cardA.printCard()
 play.player2.cardB.printCard()
+print("%%%%%%%%%%%%%%%%%%%%%%%%")
+play.printBoard()
+play.player2.printHand()
+print("%%%%%%%%%%%%%%%%%%")
+p2AllHands = play.allHands(play.player2)
+for elem in p2AllHands:
+    i = 0
+    while i < len(elem):
+        elem[i].printCard()
+        i += 1
+    print("*")
+
+
 ## Start at an attempt to execute the above-code with a for-each loop instead
 
 # for h in input_hands:
