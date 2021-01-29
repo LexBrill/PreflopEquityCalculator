@@ -9,6 +9,7 @@ import itertools
 ## For simplicity, A, K, Q, J, T will be represented with
 ## integer values of 14, 13, 12, 11, 10 respectively
 
+# This object is a card that holds just a suit and value. Also has getters and comparisons
 class Card:
     def __init__(self, value, suit):
         self.value = value
@@ -24,6 +25,8 @@ class Card:
     def printCard(self):
         print(f"{self.value} of {self.suit}")
 
+# A hand is just an object of two cards. Just like a person's dealt cards would be
+# Has functions to get either card.
 class Hand:
     def __init__(self, cards):
         self.cardA = cards[0]
@@ -36,6 +39,7 @@ class Hand:
         self.cardA.printCard()
         self.cardB.printCard()
 
+#Play class simulates any play that would occur like dealing the flop, turn, and river.
 class Play:
     def __init__(self, hands):
         self.player1 = hands[0]
@@ -46,6 +50,9 @@ class Play:
     def newDeck(self):
         suit_count = 0
         deck = []
+        
+        #Initializes a deck in order. Order doesn't matter since drawing cards
+        #will be the random part
         while suit_count <= 3:
             value_count = 2
             while value_count <= 14:
@@ -62,6 +69,9 @@ class Play:
         
         indexer = 0
         remove_counter = 0
+
+        #Cycles through the deck and removes the cards that
+        #are in the players' hands so there are no duplicates
         while indexer < len(deck):
             c = deck[indexer]
 
@@ -94,6 +104,7 @@ class Play:
         turn_random = random.randint(0, 44)
         river_random = random.randint(0, 43)
 
+        #Deals cards and makes sure cards are not redrawn by deleting them after
         board.append(self.deck[flop_random[0]])
         del self.deck[flop_random[0]]
         board.append(self.deck[flop_random[1]])
@@ -107,6 +118,8 @@ class Play:
 
         self.board = board
 
+    #Uses itertools.combinations to get all 21 possible 5-card-hands 
+    #given a board and a player's 2 card hand
     def allHands(self, playerHand):
         possible_cards = self.board
         possible_cards.append(playerHand.getCardA())
